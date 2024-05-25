@@ -1,0 +1,69 @@
+<span class="player-data" id="player-id-${this.playerName}">
+  <p class="player-label">{{ player.name }}</p>
+  <p class="player-label">Life:</p>
+  <div class="player-health-bar player-status-bar">
+    <div class="player-health-fill" id="health-fill">{{ player.life }}</div>
+  </div>
+  <p class="player-label">Mana:</p>
+  <div class="player-mana-bar player-status-bar">
+    <div class="player-mana-fill" id="mana-fill">{{ player.mana }}</div>
+  </div>
+  <p class="player-label">Stamina:</p>
+  <div class="player-stamina-bar player-status-bar">
+    <div class="player-stamina-fill" id="stamina-fill">
+      {{ player.stamina }}
+    </div>
+  </div>
+  <span class="order-player">
+    <img
+      id="seta-cima"
+      class="order-player-seta"
+      src="/seta.svg"
+      style="transform: rotate(270deg)"
+      width="10px"
+      alt=""
+    />
+    <img
+      id="seta-baixo"
+      class="order-player-seta"
+      src="/seta.svg"
+      style="transform: rotate(90deg)"
+      width="10px"
+      alt=""
+    />
+  </span>
+</span>
+<span class="player-action">
+  <ul class="player-action-list">
+    <li class="player-action-list-item">
+      <input type="number" style="width: 50px; height: 30px" />
+      <img
+        id="combat-menu-player-life-button"
+        class="player-action-list-button"
+        src="/blood.svg"
+        width="30px"
+        alt=""
+      />
+    </li>
+    <li class="player-action-list-item">
+      <input type="number" style="width: 50px; height: 30px" />
+      <img
+        id="combat-menu-player-mana-button"
+        class="player-action-list-button"
+        src="/potion.png"
+        width="30px"
+        alt=""
+      />
+    </li>
+    <li class="player-action-list-item">
+      <input type="number" style="width: 50px; height: 30px" #damageinput />
+      <img
+        id="combat-menu-player-stamina-button"
+        class="player-action-list-button"
+        src="/stamina.png"
+        width="30px"
+        (click)="this.player.damage(damageinput.value)"
+      />
+    </li>
+  </ul>
+</span>
