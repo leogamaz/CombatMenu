@@ -1,3 +1,24 @@
+
+
+@keyframes color-change-2x {
+  0% {
+    background: hsla(184, 83%, 51%, 0);
+  }
+  100% {
+    background: #c0c0c05a;
+  }
+}
+
+@keyframes scale-up-center {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+
 .player-health-bar {
   width: 300px;
   height: 15px;
@@ -74,6 +95,7 @@
   padding: 3px;
   border-radius: 8px;
   transition: border-color 0.25s;
+  width: 20px;
 }
 
 .player-action-list-button:hover {
@@ -114,19 +136,30 @@
 .player-action-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-left: -50px;
   align-items: center;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .order-player {
+  padding: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
 .order-player-seta {
+  padding: 2px;
+  background-color: #555555bb;
+  border-radius: 4px;
+  width: 8px;
   cursor: pointer;
+}
+
+.order-player-seta:hover {
+ border: 1px solid greenyellow;
 }
 
 .player {
@@ -140,4 +173,45 @@
 
 .player-action {
   width: 361.6px;
+}
+
+.player-action-list-input{
+  color: white;
+  height: 15px;
+  width: 40px;
+  height: 20px;
+
+}
+
+#trash-icon:hover{
+  border-radius: 7px;
+  animation: scale-up-center 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  cursor: pointer;
+}
+
+.player-data-points{
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: space-around;
+  gap: 15px;
+
+}
+.player-data-points div{
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+}
+
+.player{
+  padding: 5px;
+  border-radius: 7px;
+}
+
+.player:hover{
+  animation: color-change-2x 1s linear infinite alternate both;
 }

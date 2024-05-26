@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PlayerModel } from '../../core/models/PlayerModel';
 
+
 @Component({
   selector: 'app-combat-menu-player',
   templateUrl: './combat-menu-player.component.html',
@@ -8,8 +9,10 @@ import { PlayerModel } from '../../core/models/PlayerModel';
 })
 export class CombatMenuPlayerComponent {
   // Lógica do componente
-  public player: PlayerModel;
-  damageAmount: number = 0;
+  public player!: PlayerModel;
+  damageAmount!: number ;
+  manaAmount!: number ;
+  staminaAmount!: number;
 
   constructor(player: PlayerModel) {
     this.player = player;
