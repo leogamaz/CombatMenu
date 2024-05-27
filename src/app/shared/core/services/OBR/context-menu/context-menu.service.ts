@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import OBR from '@owlbear-rodeo/sdk';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,6 @@ export class ContextMenuService {
   constructor() { }
 
   setupContextMenu(){
-    console.log('teste');
     OBR.contextMenu.create({
       id: `${this.ID}/context-menu`,
       icons: [
@@ -34,14 +34,13 @@ export class ContextMenuService {
       onClick: (context) => {  // Use arrow function to preserve the 'this' context
         const addToInitiative = context.items.every((item)=> item.metadata[`${this.ID}/metadata`] === undefined);
         if (addToInitiative){
-          const initiativee = 15;
-        OBR.scene.items.updateItems(context.items, (items) => {
-          for (let item of items){
+          const initiative = 15;
 
+          OBR.scene.items.updateItems(context.items, (items) => {
+          for (let item of items){
             item.metadata[`${this.ID}/metadata`] = {
-              initiativee,
+              initiative,
             }
-            
           }
         });
         }else{

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ContextMenuService } from './shared/core/services/OBR/context-menu/context-menu.service';
-import OBR from '@owlbear-rodeo/sdk';
-
+import OBR, { Metadata } from '@owlbear-rodeo/sdk';
+import { ListaPlayersService } from './shared/core/services/OBR/lista-players/lsita-players.service';
+import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,14 +10,18 @@ import OBR from '@owlbear-rodeo/sdk';
 })
 export class AppComponent implements OnInit{
   title = 'status-character';
+  metadata = 'com.tutorial.initiative-tracker/metadata'
 
-  constructor(private contextMenuService: ContextMenuService) {}  // Certifique-se de injetar o serviço no construtor
+  constructor(private contextMenuService: ContextMenuService, private listaPlayersService: ListaPlayersService) {}  // Certifique-se de injetar o serviço no construtor
 
   ngOnInit(): void {
       OBR.onReady(() => {
-        console.log('olaaa')
         this.contextMenuService.setupContextMenu();
+        this.listaPlayersService.setupInitiativeList();
+
       })
   }
+
+  
 
 }

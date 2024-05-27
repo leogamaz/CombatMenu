@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input, Output } from '@angular/core';
 import OBR from '@owlbear-rodeo/sdk';
 
 @Injectable({
@@ -6,35 +6,28 @@ import OBR from '@owlbear-rodeo/sdk';
 })
 export class ListaPlayersService {
   ID: string = "com.tutorial.initiative-tracker";
+  playersList: any[] = []
+
 
   constructor() { }
 
-  setupInitiativeList(element:any){
+  setupInitiativeList(){
     const renderList = (items:any) =>{
-      const initiativeItems = [];
-      for (const item of items){
-        const metadata = item.metadata[`${this.ID}/metadata`];
+      const playersList = []
+      for(const item of items){
+        const metadata = item.metadata[`${this.ID}/metadata`]
         if(metadata){
-          initiativeItems.push({
+          ////ALTERAR PARA DADOS DA FICHA /////
+          playersList.push({
             initiative: metadata.initiative,
             name: item.name
           })
         }
       }
-      const sortedItems = initiativeItems.sort(
-        (a, b) => parseFloat(b.initiative) - parseFloat(a.initiative)
-      );
-      // Create new list nodes for each initiative item
-      const nodes = [];
-      
-      for (const initiativeItem of sortedItems) {
-        const node = document.createElement("li");
-        node.innerHTML = `${initiativeItem.name} (${initiativeItem.initiative})`;
-        nodes.push(node);
-      }
-      element.replaceChildren(...nodes);
+      this.playersList = playersList
     }
     OBR.scene.items.onChange(renderList);
+    return this.playersList
   }
 
 }
