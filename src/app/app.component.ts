@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContextMenuService } from './shared/core/services/OBR/context-menu.service';
+import { ContextMenuService } from './shared/core/services/OBR/context-menu/context-menu.service';
 import OBR from '@owlbear-rodeo/sdk';
 
 @Component({
