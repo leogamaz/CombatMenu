@@ -34,12 +34,16 @@ export class ContextMenuService {
       onClick: (context) => {  // Use arrow function to preserve the 'this' context
         const addToInitiative = context.items.every((item)=> item.metadata[`${this.ID}/metadata`] === undefined);
         if (addToInitiative){
-          const initiative = 15;
+          const initiative = 1;
+          const life = 1;
+          const mana = 1;
+          const stamina = 1;
+
 
           OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items){
             item.metadata[`${this.ID}/metadata`] = {
-              initiative,
+              initiative,life,mana,stamina
             }
           }
         });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { PlayerModel } from '../../core/models/PlayerModel';
 import OBR from '@owlbear-rodeo/sdk';
 import { ContextMenuService } from '../../core/services/OBR/context-menu/context-menu.service';
@@ -8,28 +8,32 @@ import { ListaPlayersService } from '../../core/services/OBR/lista-players/lsita
   templateUrl: './combat-menu-player.component.html',
   styleUrl: './combat-menu-player.component.css',
 })
-export class CombatMenuPlayerComponent {
+export class CombatMenuPlayerComponent implements OnInit {
   // Lógica do componente
   contextMenuService! : ContextMenuService
-  listaPlayersService!: ListaPlayersService
+  //listaPlayersService!: ListaPlayersService
   public player!: PlayerModel;
   damageAmount!: number ;
   manaAmount!: number ;
   staminaAmount!: number;
+  playersList: any[] = []
 
-  constructor(player: PlayerModel,) {
+  constructor(player: PlayerModel, private listaPlayerService : ListaPlayersService,private cdr: ChangeDetectorRef) {
     this.player = player;
     this.player.initialize('Skill', 50, 30, 20);
   }
 
-  showplayers(){
-    OBR.onReady(() => {
-
-      let here = this.listaPlayersService.setupInitiativeList();
-      console.log('olaa')
-
+  ngOnInit(): void {
+    this.listaPlayerService.playersListUpdated.subscribe((playersList:any[]) => {
+      this.playersList = playersList
+      console.log(playersList)
+      this.cdr.detectChanges();
     })
+
   }
+
+
+
 
 
 }

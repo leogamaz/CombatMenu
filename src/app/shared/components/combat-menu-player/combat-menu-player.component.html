@@ -1,22 +1,22 @@
-<div class="player" id="player-id-${this.playerName}">
+<div *ngFor="let player of playersList" class="player">
   <span class="player-data">
     <p class="player-label">{{ player.name }}</p>
     <p class="player-label">Life:</p>
     <div class="player-health-bar player-status-bar">
       <div class="player-health-fill" id="health-fill">
-        {{ player.statusLifePercent }}%
+        {{ player.life }}%
       </div>
     </div>
     <p class="player-label">Mana:</p>
     <div class="player-mana-bar player-status-bar">
       <div class="player-mana-fill" id="mana-fill">
-        {{ player.statusManaPercent }}%
+        {{ player.mana }}%
       </div>
     </div>
     <p class="player-label">Stamina:</p>
     <div class="player-stamina-bar player-status-bar">
       <div class="player-stamina-fill" id="stamina-fill">
-        {{ player.statusStaminaPercent }}%
+        {{ player.stamina }}%
       </div>
     </div>
     <span class="order-player">
@@ -41,28 +41,28 @@
   <span class="player-data-points">
     <div id="player-data-points-life">
       <p>Life:</p>
-      <p>{{player.statusLife}}</p>
+      <p>{{player.life}}</p>
     </div>
 
     <div id="player-data-points-mana">
       <p>Life:</p>
-      <p>{{player.statusMana}}</p>
+      <p>{{player.mana}}</p>
     </div>
 
     <div id="player-data-points-stamina">
       <p>Life:</p>
-      <p>{{player.statusStamina}}</p>
+      <p>{{player.stamina}}</p>
     </div>
 
     <div id="player-data-points-initiative">
       <p>Initiative:</p>
-      <p>{{player.statusStamina}}</p>
+      <p>{{player.Initiative}}</p>
     </div>
 
   </span>
   <span class="player-action">
     <ul class="player-action-list">
-      <!-- VIDA -->
+
       <li class="player-action-list-item">
         <input
           type="number"
@@ -78,7 +78,7 @@
           (click)="this.player.lifeController(damageinput.value)"
         />
       </li>
-      <!-- MANA -->
+
       <li class="player-action-list-item">
         <input
         [(ngModel)]="manaAmount"
@@ -92,7 +92,7 @@
           src="/potion.png"
         />
       </li>
-      <!-- STAMINA -->
+
       <li class="player-action-list-item">
         <input
         [(ngModel)]="staminaAmount"
