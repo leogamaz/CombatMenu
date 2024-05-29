@@ -17,6 +17,7 @@ export class CombatMenuPlayerComponent implements OnInit {
   manaAmount!: number ;
   staminaAmount!: number;
   playersList: any[] = []
+  players!: PlayerModel[]
 
   constructor(player: PlayerModel, private listaPlayerService : ListaPlayersService,private cdr: ChangeDetectorRef) {
     this.player = player;
@@ -26,12 +27,22 @@ export class CombatMenuPlayerComponent implements OnInit {
   ngOnInit(): void {
     this.listaPlayerService.playersListUpdated.subscribe((playersList:any[]) => {
       this.playersList = playersList
-      console.log(playersList)
+      this.updateListPlayers()
       this.cdr.detectChanges();
     })
 
   }
 
+  updateListPlayers(){
+    let newListPlayers : PlayerModel[] = []
+    this.playersList.forEach((player)=>{
+      let playerModel = new PlayerModel
+      playerModel.initialize(player.name,player.life,player.mana,player.stamina)
+      newListPlayers.push(playerModel)
+      this.players = newListPlayers
+
+    })
+  }
 
 
 

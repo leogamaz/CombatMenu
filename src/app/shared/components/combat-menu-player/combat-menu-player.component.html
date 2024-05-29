@@ -1,22 +1,22 @@
-<div *ngFor="let player of playersList" class="player">
+<div *ngFor="let player of players" class="player">
   <span class="player-data">
     <p class="player-label">{{ player.name }}</p>
     <p class="player-label">Life:</p>
     <div class="player-health-bar player-status-bar">
       <div class="player-health-fill" id="health-fill">
-        {{ player.life }}%
+        {{ player.statusLifePercent }}%
       </div>
     </div>
     <p class="player-label">Mana:</p>
     <div class="player-mana-bar player-status-bar">
       <div class="player-mana-fill" id="mana-fill">
-        {{ player.mana }}%
+        {{ player.statusManaPercent }}%
       </div>
     </div>
     <p class="player-label">Stamina:</p>
     <div class="player-stamina-bar player-status-bar">
       <div class="player-stamina-fill" id="stamina-fill">
-        {{ player.stamina }}%
+        {{ player.statusStaminaPercent }}%
       </div>
     </div>
     <span class="order-player">
@@ -56,7 +56,7 @@
 
     <div id="player-data-points-initiative">
       <p>Initiative:</p>
-      <p>{{player.Initiative}}</p>
+      <p>{{player.life}}</p>
     </div>
 
   </span>
