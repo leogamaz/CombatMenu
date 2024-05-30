@@ -1,4 +1,4 @@
-<div *ngFor="let player of players" class="player">
+<div *ngFor="let player of players" id="player-{{player.name}}">
   <span class="player-data">
     <p class="player-label">{{ player.name }}</p>
     <p class="player-label">Life:</p>
@@ -41,22 +41,22 @@
   <span class="player-data-points">
     <div id="player-data-points-life">
       <p>Life:</p>
-      <p>{{player.life}}</p>
+      <p>{{player.life}} : {{player.statusLife}}</p>
     </div>
 
     <div id="player-data-points-mana">
       <p>Life:</p>
-      <p>{{player.mana}}</p>
+      <p>{{player.mana}} : {{player.statusMana}}</p>
     </div>
 
     <div id="player-data-points-stamina">
       <p>Life:</p>
-      <p>{{player.stamina}}</p>
+      <p>{{player.stamina}} : {{player.statusStamina}}</p>
     </div>
 
     <div id="player-data-points-initiative">
       <p>Initiative:</p>
-      <p>{{player.life}}</p>
+      <p>{{player.life}} : {{player.statusLife}}</p>
     </div>
 
   </span>
@@ -75,7 +75,7 @@
           id="combat-menu-player-life-button"
           class="player-action-list-button"
           src="/blood.svg"
-          (click)="this.player.lifeController(damageinput.value)"
+          (click)="player.lifeController(damageinput.value)"
         />
       </li>
 
@@ -86,7 +86,7 @@
         type="number"
         class="player-action-list-input" />
         <img
-          (click)="this.player.manaController(manaInput.value)"
+          (click)="player.manaController(manaInput.value)"
           id="combat-menu-player-mana-button"
           class="player-action-list-button"
           src="/potion.png"
@@ -101,7 +101,7 @@
 
         class="player-action-list-input" />
         <img
-          (click)="this.player.staminaController(staminaInput.value)"
+          (click)="player.staminaController(staminaInput.value)"
           id="combat-menu-player-stamina-button"
           class="player-action-list-button"
           src="/stamina.png"

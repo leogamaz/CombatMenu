@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, platformCore} from '@angular/core';
 import { PlayerModel } from '../../core/models/PlayerModel';
-import OBR from '@owlbear-rodeo/sdk';
+import OBR, { Player } from '@owlbear-rodeo/sdk';
 import { ContextMenuService } from '../../core/services/OBR/context-menu/context-menu.service';
 import { ListaPlayersService } from '../../core/services/OBR/lista-players/lsita-players.service';
 @Component({
@@ -16,34 +16,44 @@ export class CombatMenuPlayerComponent implements OnInit {
   damageAmount!: number ;
   manaAmount!: number ;
   staminaAmount!: number;
-  playersList: any[] = []
-  players!: PlayerModel[]
+  playersdData: any[] = []
+  players! : PlayerModel[]
+
 
   constructor(player: PlayerModel, private listaPlayerService : ListaPlayersService,private cdr: ChangeDetectorRef) {
-    this.player = player;
-    this.player.initialize('Skill', 50, 30, 20);
+
   }
 
   ngOnInit(): void {
-    this.listaPlayerService.playersListUpdated.subscribe((playersList:any[]) => {
-      this.playersList = playersList
-      this.updateListPlayers()
+    this.listaPlayerService.playersListUpdated.subscribe((playersdData:any[]) => {
+      this.playersdData = playersdData
+      this.players = this.GetInstancePlayers(this.playersdData)
       this.cdr.detectChanges();
+
+
     })
 
   }
 
-  updateListPlayers(){
-    let newListPlayers : PlayerModel[] = []
-    this.playersList.forEach((player)=>{
-      let playerModel = new PlayerModel
-      playerModel.initialize(player.name,player.life,player.mana,player.stamina)
-      newListPlayers.push(playerModel)
-      this.players = newListPlayers
-
+  GetInstancePlayers(playersdData: any[]): PlayerModel[]{
+    let instacedPlayers :PlayerModel[] = []
+    playersdData.forEach((data)=>{
+      const player = new PlayerModel
+      player.name = data.player.name
+      player.life = data.player.life
+      player.mana = data.player.mana
+      player.stamina = data.player.stamina
+      player.statusLife = data.player.statusLife
+      player.statusMana = data.player.statusMana
+      player.statusStamina = data.player.statusStamina
+      player.statusLifePercent = data.player.statusLifePercent
+      player.statusManaPercent = data.player.statusManaPercent
+      player.statusStaminaPercent = data.player.statusStaminaPercent
+      instacedPlayers.push(player)
     })
-  }
 
+    return instacedPlayers
+  }
 
 
 

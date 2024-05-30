@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import OBR from '@owlbear-rodeo/sdk';
+import { PlayerModel } from '../../../models/PlayerModel';
 
 
 @Injectable({
@@ -34,16 +35,13 @@ export class ContextMenuService {
       onClick: (context) => {  // Use arrow function to preserve the 'this' context
         const addToInitiative = context.items.every((item)=> item.metadata[`${this.ID}/metadata`] === undefined);
         if (addToInitiative){
-          const initiative = 20;
-          const life = 100;
-          const mana = 50;
-          const stamina = 30;
-
 
           OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items){
+            const player  = new PlayerModel
+            player.initialize(item.name,30,20,10)
             item.metadata[`${this.ID}/metadata`] = {
-              initiative,life,mana,stamina
+              statusPlayer: player
             }
           }
         });

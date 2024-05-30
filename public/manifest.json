@@ -1,9 +1,9 @@
 {
-    "name": "Angular!",
+    "name": "LocalHost!",
     "version": "1.0.0",
     "manifest_version": 1,
     "action": {
-      "title": "Angular!",
+      "title": "LocalHost!",
       "icon": "/public/dice.svg",
       "popover": "/",
       "height": 600,

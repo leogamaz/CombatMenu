@@ -19,11 +19,7 @@ export class ListaPlayersService {
         if (metadata) {
           // Alterar para dados da ficha
           playersList.push({
-            life: metadata.life,
-            mana: metadata.mana,
-            stamina: metadata.stamina,
-            initiative: metadata.initiative,
-            name: item.name
+            player : metadata.statusPlayer
           });
         }
       }
@@ -33,6 +29,8 @@ export class ListaPlayersService {
 
     OBR.scene.items.onChange(renderList);
 
+    // Garantir que o evento é emitido quando a lista está vazia
+    renderList(OBR.scene.items);
   }
 
 }

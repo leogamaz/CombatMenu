@@ -96,19 +96,21 @@ export class PlayerModel {
   private updateStatusBar(bar:string){
     switch (bar){
       case 'health':
-        let healthFill = document.getElementById('health-fill')
+        let healthFill = document.querySelector<HTMLElement>(`#player-${this.name} #health-fill`)
+        //let healthFill = document.getElementById('health-fill')
         if(healthFill){
           healthFill.style.width = `${this.statusLifePercent}%`
         }
       break
       case 'mana':
-        let manaFill = document.getElementById('mana-fill')
+        let manaFill = document.querySelector<HTMLElement>(`#player-${this.name} #mana-fill`)
         if(manaFill){
           manaFill.style.width = `${this.statusManaPercent}%`
         }
       break
       case 'stamina':
-        let staminaFill = document.getElementById('stamina-fill')
+        let staminaFill = document.querySelector<HTMLElement>(`#player-${this.name} #stamina-fill`)
+        console.log(document.querySelector('#player-'+this.name))
         if(staminaFill){
           staminaFill.style.width = `${this.statusStaminaPercent}%`
         }
