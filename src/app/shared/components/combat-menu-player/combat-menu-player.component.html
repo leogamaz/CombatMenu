@@ -1,9 +1,13 @@
-<div *ngFor="let player of players" id="player-{{player.name}}">
+<div *ngFor="let player of players" id="player-{{ player.name }}">
   <span class="player-data">
     <p class="player-label">{{ player.name }}</p>
     <p class="player-label">Life:</p>
     <div class="player-health-bar player-status-bar">
-      <div class="player-health-fill" id="health-fill">
+      <div
+        [ngStyle]="{ width: player.statusLifePercent + '%' }"
+        class="player-health-fill"
+        id="health-fill"
+      >
         {{ player.statusLifePercent }}%
       </div>
     </div>
@@ -15,7 +19,11 @@
     </div>
     <p class="player-label">Stamina:</p>
     <div class="player-stamina-bar player-status-bar">
-      <div class="player-stamina-fill" id="stamina-fill">
+      <div
+        [ngStyle]="{ width: player.statusLifePercent + '%' }"
+        class="player-stamina-fill"
+        id="stamina-fill"
+      >
         {{ player.statusStaminaPercent }}%
       </div>
     </div>
@@ -41,32 +49,29 @@
   <span class="player-data-points">
     <div id="player-data-points-life">
       <p>Life:</p>
-      <p>{{player.life}} : {{player.statusLife}}</p>
+      <p>{{ player.life }} : {{ player.statusLife }}</p>
     </div>
 
     <div id="player-data-points-mana">
       <p>Life:</p>
-      <p>{{player.mana}} : {{player.statusMana}}</p>
+      <p>{{ player.mana }} : {{ player.statusMana }}</p>
     </div>
 
     <div id="player-data-points-stamina">
       <p>Life:</p>
-      <p>{{player.stamina}} : {{player.statusStamina}}</p>
+      <p>{{ player.stamina }} : {{ player.statusStamina }}</p>
     </div>
 
     <div id="player-data-points-initiative">
       <p>Initiative:</p>
-      <p>{{player.life}} : {{player.statusLife}}</p>
+      <p>{{ player.life }} : {{ player.statusLife }}</p>
     </div>
-
   </span>
   <span class="player-action">
     <ul class="player-action-list">
-
       <li class="player-action-list-item">
         <input
           type="number"
-
           [(ngModel)]="damageAmount"
           #damageinput
           class="player-action-list-input"
@@ -75,18 +80,19 @@
           id="combat-menu-player-life-button"
           class="player-action-list-button"
           src="/blood.svg"
-          (click)="player.lifeController(damageinput.value)"
+          (click)="updateLife(player,damageinput.value)"
         />
       </li>
 
       <li class="player-action-list-item">
         <input
-        [(ngModel)]="manaAmount"
-        #manaInput
-        type="number"
-        class="player-action-list-input" />
+          [(ngModel)]="manaAmount"
+          #manaInput
+          type="number"
+          class="player-action-list-input"
+        />
         <img
-          (click)="player.manaController(manaInput.value)"
+        (click)="updateMana(player,manaInput.value)"
           id="combat-menu-player-mana-button"
           class="player-action-list-button"
           src="/potion.png"
@@ -95,20 +101,20 @@
 
       <li class="player-action-list-item">
         <input
-        [(ngModel)]="staminaAmount"
-        #staminaInput
-        type="number"
-
-        class="player-action-list-input" />
+          [(ngModel)]="staminaAmount"
+          #staminaInput
+          type="number"
+          class="player-action-list-input"
+        />
         <img
-          (click)="player.staminaController(staminaInput.value)"
+        (click)="updateStamina(player,staminaInput.value)"
           id="combat-menu-player-stamina-button"
           class="player-action-list-button"
           src="/stamina.png"
         />
       </li>
       <li class="player-action-list-item">
-        <img src="/trash.svg" id="trash-icon">
+        <img src="/trash.svg" id="trash-icon" />
       </li>
     </ul>
   </span>

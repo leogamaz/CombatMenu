@@ -29,7 +29,7 @@
 
 .player-health-fill {
   height: 100%;
-  width: 100%;
+
   background: linear-gradient(to right, #e00b07, #f46060);
   transition: width 0.5s ease-in-out;
 }
@@ -42,7 +42,7 @@
 
 .player-mana-fill {
   height: 100%;
-  width: 100%;
+
   background: linear-gradient(to right, #073de0, #4ca2ed);
   transition: width 0.5s ease-in-out;
 }
@@ -55,7 +55,7 @@
 
 .player-stamina-fill {
   height: 100%;
-  width: 100%;
+
   background: linear-gradient(to right, #27981b, #42cb32);
   transition: width 0.5s ease-in-out;
 }

@@ -1,8 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef, platformCore} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { PlayerModel } from '../../core/models/PlayerModel';
-import OBR, { Player } from '@owlbear-rodeo/sdk';
 import { ContextMenuService } from '../../core/services/OBR/context-menu/context-menu.service';
 import { ListaPlayersService } from '../../core/services/OBR/lista-players/lsita-players.service';
+import { UpdatePlayersService } from '../../core/services/OBR/update-players/update-players.service';
+
+
+
 @Component({
   selector: 'app-combat-menu-player',
   templateUrl: './combat-menu-player.component.html',
@@ -10,51 +17,70 @@ import { ListaPlayersService } from '../../core/services/OBR/lista-players/lsita
 })
 export class CombatMenuPlayerComponent implements OnInit {
   // Lógica do componente
-  contextMenuService! : ContextMenuService
+  contextMenuService!: ContextMenuService;
   //listaPlayersService!: ListaPlayersService
   public player!: PlayerModel;
-  damageAmount!: number ;
-  manaAmount!: number ;
+  damageAmount!: number;
+  manaAmount!: number;
   staminaAmount!: number;
-  playersdData: any[] = []
-  players! : PlayerModel[]
+  playersdData: any[] = [];
+  players!: PlayerModel[];
 
-
-  constructor(player: PlayerModel, private listaPlayerService : ListaPlayersService,private cdr: ChangeDetectorRef) {
-
-  }
+  constructor(
+    private listaPlayerService: ListaPlayersService,
+    private updatePlayerService : UpdatePlayersService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.listaPlayerService.playersListUpdated.subscribe((playersdData:any[]) => {
-      this.playersdData = playersdData
-      this.players = this.GetInstancePlayers(this.playersdData)
-      this.cdr.detectChanges();
-
-
-    })
-
+    this.listaPlayerService.playersListUpdated.subscribe(
+      (playersdData: any[]) => {
+        this.playersdData = playersdData;
+        this.players = this.GetInstancePlayers(this.playersdData);
+        this.cdr.detectChanges();
+      }
+    );
   }
 
-  GetInstancePlayers(playersdData: any[]): PlayerModel[]{
-    let instacedPlayers :PlayerModel[] = []
-    playersdData.forEach((data)=>{
-      const player = new PlayerModel
-      player.name = data.player.name
-      player.life = data.player.life
-      player.mana = data.player.mana
-      player.stamina = data.player.stamina
-      player.statusLife = data.player.statusLife
-      player.statusMana = data.player.statusMana
-      player.statusStamina = data.player.statusStamina
-      player.statusLifePercent = data.player.statusLifePercent
-      player.statusManaPercent = data.player.statusManaPercent
-      player.statusStaminaPercent = data.player.statusStaminaPercent
-      instacedPlayers.push(player)
-    })
-
-    return instacedPlayers
+  updateLife(player: PlayerModel, life: number | string):void{
+    //Atualiza a vida no client
+    player.lifeController(life)
+    //Atualiza no server
+    this.updatePlayerService.UpdatePlayers(player)
+    return
   }
 
+  updateMana(player: PlayerModel, mana: number | string):void{
+    //Atualiza a vida no client
+    player.manaController(mana)
+    //Atualiza no server
+    this.updatePlayerService.UpdatePlayers(player)
+    return
+  }
 
+  updateStamina(player: PlayerModel, stamina: number | string):void{
+    //Atualiza a vida no client
+    player.staminaController(stamina)
+    //Atualiza no server
+    this.updatePlayerService.UpdatePlayers(player)
+    return
+  }
+
+  GetInstancePlayers(playersdData: any[]): PlayerModel[] {
+    let instacedPlayers: PlayerModel[] = [];
+    playersdData.forEach((data) => {
+      const player = new PlayerModel(
+        data.player.id,
+        data.player.name,
+        data.player.life,
+        data.player.mana,
+        data.player.stamina
+      );
+
+      instacedPlayers.push(player);
+    });
+
+    return instacedPlayers;
+  }
 
 }
