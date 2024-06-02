@@ -16,10 +16,8 @@ export class SyncPlayersService {
 
   /**
    * Sincroniza os dados dos jogadores ouvindo as mudanças nos itens da cena.
-   * @param element O elemento ao qual os dados dos jogadores são sincronizados (se necessário).
-   * @returns Promise<PlayerModel[]> Uma promessa que resolve para um array de instâncias de PlayerModel.
    */
-  syncPlayers() {
+  pullPlayers() {
     const playersList = (players: Array<any>) => {
       let playerItems: PlayerModel[] = [];
       players.forEach((player: any) => {
@@ -31,5 +29,21 @@ export class SyncPlayersService {
       this.playersListUpdated.emit(playerItems);
     };
     OBR.scene.items.onChange(playersList);
+  }
+
+  pushPlayers(players: PlayerModel[]) {
+    players.forEach((player) => {
+      OBR.scene.items.updateItems([player.id], (itemsPlayer) => {
+        itemsPlayer.forEach((item) => {
+          item.metadata[this.metadata] = {player}
+        });
+      });
+    });
+  }
+
+  getPlayers() {
+    OBR.scene.items
+      .getItems(['b8d62fff-43e9-4ca1-8766-f69767a9baf8'])
+      .then((item) => console.log(item));
   }
 }

@@ -26,15 +26,15 @@ export class PlayerModel {
     this.statusLife = life;
     this.statusMana = mana;
     this.statusStamina = stamina;
-    this.statusLifePercent = (this.life / this.statusLife) * 100;
-    this.statusManaPercent = (this.mana / this.statusMana) * 100;
-    this.statusStaminaPercent = (this.stamina / this.statusStamina) * 100;
+    this.statusLifePercent = (this.statusMana / this.life) * 100;
+    this.statusManaPercent = (this.statusMana / this.mana) * 100;
+    this.statusStaminaPercent = (this.statusStamina / this.stamina) * 100;
   }
 
-  updateLife(life: number | string): void {
+  updateLife(life: number | string) {
     life = Number(life);
     //Vida atualizada é maior que o total de vida do personagem?
-    switch (this.statusLife + life > this.life) {
+    switch (this.statusLife + life < this.life) {
       case true:
         //Reduz a vida caso life seja negativo, e soma caso positivo
         this.statusLife += life;
@@ -47,46 +47,44 @@ export class PlayerModel {
     this.recalPercents();
   }
 
-  updateMana(mana: number | string): void {
+  updateMana(mana: number | string) {
     mana = Number(mana);
-    //Mana atualizada é maior que o total de mana do personagem?
-    switch (this.statusMana + mana > this.mana) {
+    //Vida atualizada é maior que o total de vida do personagem?
+    switch (this.statusMana + mana < this.mana) {
       case true:
-        //Reduz a vida caso mana seja negativo, e soma caso positivo
+        //Reduz a vida caso life seja negativo, e soma caso positivo
         this.statusMana += mana;
-
         break;
       case false:
-        // Define a mana atual ao maximo
+        // Define a vida atual ao maximo
         this.statusMana = this.mana;
         break;
     }
     this.recalPercents();
   }
-
-  updateStamina(stamina: number | string): void {
+  updateStamina(stamina: number | string) {
     stamina = Number(stamina);
-    //Stamina atualizada é maior que o total de Stamina do personagem?
-    switch (this.statusStamina + stamina > this.stamina) {
+    //Vida atualizada é maior que o total de vida do personagem?
+    switch (this.statusStamina + stamina < this.stamina) {
       case true:
-        //Reduz a Stamina caso life seja negativo, e soma caso positivo
+        //Reduz a vida caso life seja negativo, e soma caso positivo
         this.statusStamina += stamina;
-
         break;
       case false:
-        // Define a Stamina atual ao maximo
+        // Define a vida atual ao maximo
         this.statusStamina = this.stamina;
         break;
     }
     this.recalPercents();
   }
 
+
   private recalPercents(): void {
     // Recalcula as porcentagens de status do personagem.
-    this.statusLifePercent = (this.life / this.statusLife) * 100;
-    this.statusManaPercent = (this.mana / this.statusMana) * 100;
-    this.statusStaminaPercent = (this.stamina / this.statusStamina) * 100;
-    this.updateStatusBar()
+    this.statusLifePercent = (this.statusLife / this.life) * 100;
+    this.statusManaPercent = (this.statusMana / this.mana) * 100;
+    this.statusStaminaPercent = (this.statusStamina / this.stamina) * 100;
+    this.updateStatusBar();
   }
 
   private updateStatusBar(): void {
@@ -104,5 +102,21 @@ export class PlayerModel {
     if (staminaFill) {
       staminaFill.style.width = `${this.statusStaminaPercent}%`;
     }
+  }
+
+  public static fromJSON(data: any): PlayerModel {
+    const player = new PlayerModel('', '', 0, 0, 0); // Chamada com valores iniciais
+    player.id = data.id;
+    player.name = data.name;
+    player.life = data.life;
+    player.mana = data.mana;
+    player.stamina = data.stamina;
+    player.statusLife = data.statusLife;
+    player.statusMana = data.statusMana;
+    player.statusStamina = data.statusStamina;
+    player.statusLifePercent = data.statusLifePercent;
+    player.statusManaPercent = data.statusManaPercent;
+    player.statusStaminaPercent = data.statusStaminaPercent;
+    return player;
   }
 }

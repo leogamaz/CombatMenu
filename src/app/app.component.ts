@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 
     OBR.onReady(() => {
       this.contextMenuService.createMenu()
-      this.syncPlayersService.syncPlayers()
+      this.syncPlayersService.pullPlayers()
     });
   }
 }
