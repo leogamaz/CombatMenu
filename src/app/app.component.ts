@@ -1,6 +1,15 @@
-import { Component, OnChanges, OnInit, SimpleChanges, contentChild } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  contentChild,
+} from '@angular/core';
 
-import OBR, { Metadata } from '@owlbear-rodeo/sdk';
+import OBR, { ContextMenuContext, Metadata } from '@owlbear-rodeo/sdk';
+import { PlayerModel } from './shared/core/models/playerModel';
+import { ContextMenuService } from './shared/core/services/OBR/context-menu/context-menu.service';
+import { SyncPlayersService } from './shared/core/services/OBR/sync-players/sync-players.service';
 
 @Component({
   selector: 'app-root',
@@ -13,42 +22,13 @@ export class AppComponent implements OnInit {
   contextMenu = 'com.simple.combat.menu/contextMenu';
   id = 'com.simple.combat.menu';
 
-
-
-  constructor() {} // Certifique-se de injetar o serviço no construtor
+  constructor(private contextMenuService: ContextMenuService, private syncPlayersService : SyncPlayersService) {} // Certifique-se de injetar o serviço no construtor
 
   ngOnInit(): void {
-    const metadata = this.metadata
-    OBR.onReady(() => {
-      OBR.contextMenu.create({
-        id: this.contextMenu,
-        icons:[
-          {
-            icon: 'add.svg',
-            label: "Adicionar ao Combate",
-            filter: {
-              every:[
-                {key: "layer", value: "CHARACTER"},
-                {key: ["metadata",metadata],value: undefined}
-              ]
-            }
 
-          },
-          {
-            icon: 'remove.svg',
-            label: "Remover do Combate",
-            filter: {
-              every:[
-                {key: "layer", value: "CHARACTER"},
-              ]
-            }
-          }
-        ],
-        onClick(context){
-          const addToMenu = context.items.every((item) => item.metadata[metadata] === undefined);
-          
-        }
-      })
+    OBR.onReady(() => {
+      this.contextMenuService.createMenu()
+      this.syncPlayersService.syncPlayers()
     });
   }
 }
