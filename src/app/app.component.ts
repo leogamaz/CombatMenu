@@ -22,13 +22,16 @@ export class AppComponent implements OnInit {
   contextMenu = 'com.simple.combat.menu/contextMenu';
   id = 'com.simple.combat.menu';
 
-  constructor(private contextMenuService: ContextMenuService, private syncPlayersService : SyncPlayersService) {} // Certifique-se de injetar o serviço no construtor
+  constructor(
+    private contextMenuService: ContextMenuService,
+    private syncPlayersService: SyncPlayersService
+  ) {} // Certifique-se de injetar o serviço no construtor
 
   ngOnInit(): void {
-
     OBR.onReady(() => {
-      this.contextMenuService.createMenu()
-      this.syncPlayersService.pullPlayers()
+      this.contextMenuService.createMenu();
+      this.syncPlayersService.pullPlayers();
+      this.syncPlayersService.pullOrderPlayers();
     });
   }
 }

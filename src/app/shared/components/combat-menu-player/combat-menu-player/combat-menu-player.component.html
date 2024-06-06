@@ -31,8 +31,9 @@
         {{ player.statusStaminaPercent }}%
       </div>
     </div>
-    <span class="order-player">
+    <span *ngIf="playerRole == 'GM'" class="order-player">
       <img
+        (click)="sortUpPlayer(player)"
         id="seta-cima"
         class="order-player-seta"
         src="/seta.svg"
@@ -41,6 +42,7 @@
         alt=""
       />
       <img
+        (click)="sortDownPlayer(player)"
         id="seta-baixo"
         class="order-player-seta"
         src="/seta.svg"
@@ -66,7 +68,7 @@
       <p>{{ player.stamina }} : {{ player.statusStamina }}</p>
     </div>
   </span>
-  <span class="player-action">
+  <span *ngIf="playerRole == 'GM'" class="player-action">
     <ul class="player-action-list">
       <li class="player-action-list-item">
         <input
@@ -112,9 +114,7 @@
           src="/stamina.png"
         />
       </li>
-      <li
-      (click)="removeFromCombat(player)"
-      class="player-action-list-item">
+      <li (click)="removeFromCombat(player)" class="player-action-list-item">
         <img src="/trash.svg" id="trash-icon" />
       </li>
     </ul>

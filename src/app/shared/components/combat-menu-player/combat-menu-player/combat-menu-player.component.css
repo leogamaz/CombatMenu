@@ -16,6 +16,13 @@
   }
 }
 
+.unknow-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #474747, #3d3d3d);
+  transition: width 0.5s ease-in-out;
+}
+
 .player-health-bar {
   width: 300px;
   height: 15px;
@@ -191,7 +198,6 @@
   color: white;
   justify-content: space-between;
   gap: 15px;
-
 }
 .player-data-points div {
   display: flex;

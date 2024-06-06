@@ -10,6 +10,7 @@ export class PlayerModel {
   public statusManaPercent: number;
   public statusStaminaPercent: number;
   public id: string;
+  public type: string = 'player';
 
   constructor(
     id: string,
@@ -77,7 +78,12 @@ export class PlayerModel {
     }
     this.recalPercents();
   }
-
+  public setMonster() {
+    this.type = 'monster';
+  }
+  public setPlayer() {
+    this.type = 'player';
+  }
 
   private recalPercents(): void {
     // Recalcula as porcentagens de status do personagem.

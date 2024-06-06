@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import OBR from '@owlbear-rodeo/sdk';
+import OBR, { Metadata } from '@owlbear-rodeo/sdk';
 import { PlayerModel } from '../../../models/playerModel';
 
 @Injectable({
@@ -11,6 +11,9 @@ export class SyncPlayersService {
   contextMenu = 'com.simple.combat.menu/contextMenu';
   id = 'com.simple.combat.menu';
   playersListUpdated: EventEmitter<any[]> = new EventEmitter<any[]>();
+  orderPlayersUpdated: EventEmitter<Array<string>> = new EventEmitter<
+    Array<string>
+  >();
 
   constructor() {}
 
@@ -35,15 +38,26 @@ export class SyncPlayersService {
     players.forEach((player) => {
       OBR.scene.items.updateItems([player.id], (itemsPlayer) => {
         itemsPlayer.forEach((item) => {
-          item.metadata[this.metadata] = {player}
+          item.metadata[this.metadata] = { player };
         });
       });
     });
   }
 
   getPlayers() {
-    OBR.scene.items
-      .getItems(['b8d62fff-43e9-4ca1-8766-f69767a9baf8'])
-      .then((item) => console.log(item));
+    OBR.scene.items.getItems(['b8d62fff-43e9-4ca1-8766-f69767a9baf8']);
+  }
+
+  pushOrderPlayers(order: Array<string>) {
+    OBR.room.setMetadata({ 'com.simple.combat.menu/orderPlayers': order });
+  }
+
+  pullOrderPlayers() {
+    const callBackOrder = (metadata: any) => {
+      const newOrder: Array<string> =
+        metadata['com.simple.combat.menu/orderPlayers'];
+      this.orderPlayersUpdated.emit(newOrder);
+    };
+    OBR.room.onMetadataChange(callBackOrder);
   }
 }
