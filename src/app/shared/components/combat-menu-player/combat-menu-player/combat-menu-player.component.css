@@ -1,5 +1,3 @@
-
-
 @keyframes color-change-2x {
   0% {
     background: hsla(184, 83%, 51%, 0);
@@ -18,6 +16,12 @@
   }
 }
 
+.unknow-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #474747, #3d3d3d);
+  transition: width 0.5s ease-in-out;
+}
 
 .player-health-bar {
   width: 300px;
@@ -159,7 +163,7 @@
 }
 
 .order-player-seta:hover {
- border: 1px solid greenyellow;
+  border: 1px solid greenyellow;
 }
 
 .player {
@@ -175,29 +179,27 @@
   width: 361.6px;
 }
 
-.player-action-list-input{
+.player-action-list-input {
   color: white;
   height: 15px;
   width: 40px;
   height: 20px;
-
 }
 
-#trash-icon:hover{
+#trash-icon:hover {
   border-radius: 7px;
   animation: scale-up-center 0.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   cursor: pointer;
 }
 
-.player-data-points{
+.player-data-points {
   display: flex;
   flex-direction: row;
   color: white;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 15px;
-
 }
-.player-data-points div{
+.player-data-points div {
   display: flex;
   flex-direction: row;
   color: white;
@@ -207,11 +209,28 @@
   height: 20px;
 }
 
-.player{
+.player {
   padding: 5px;
   border-radius: 7px;
 }
 
-.player:hover{
+.player:hover {
   animation: color-change-2x 1s linear infinite alternate both;
+}
+
+.turn-controller {
+  display: flex;
+  justify-content: space-between;
+}
+
+#buttons-turn {
+  margin-top: 8px;
+  background-color: transparent;
+  border: 1px solid rgb(115, 246, 71);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  &&:hover {
+    background-color: #83838366;
+  }
 }

@@ -1,0 +1,48 @@
+* {
+  color: white;
+}
+
+.data-player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+
+  .input-value-points {
+    margin: 0px;
+    background-color: transparent;
+    border: 1px solid rgb(104, 244, 104);
+    border-radius: 5px;
+    width: 25px;
+    height: 15px;
+  }
+  &&:hover {
+    background-color: rgba(55, 55, 55, 0.202);
+  }
+}
+#button-confirm {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  justify-self: end;
+
+  select {
+    background-color: transparent;
+
+    option {
+      background-color: transparent;
+    }
+  }
+}
+.confirm-player {
+  border: 1px solid rgb(104, 244, 104);
+  background-color: rgb(71, 72, 71);
+  border-radius: 5px;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  &&:hover {
+    background-color: rgba(116, 180, 130, 0.65);
+  }
+}

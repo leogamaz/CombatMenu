@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ListaPlayersService } from './lsita-players.service';
+import { PlayerService } from './player.service';
 
-describe('LsitaPlayersService', () => {
-  let service: ListaPlayersService;
+describe('PlayerService', () => {
+  let service: PlayerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ListaPlayersService);
+    service = TestBed.inject(PlayerService);
   });
 
   it('should be created', () => {

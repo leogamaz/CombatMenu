@@ -1,56 +1,59 @@
 import { Injectable } from '@angular/core';
-import OBR from '@owlbear-rodeo/sdk';
-
+import OBR, { isImage, Image, Item } from '@owlbear-rodeo/sdk';
+import { PlayerModel } from '../../../models/playerModel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContextMenuService {
+  title = 'status-character';
+  metadata = 'com.simple.combat.menu/metadata';
+  contextMenu = 'com.simple.combat.menu/contextMenu';
+  id = 'com.simple.combat.menu';
+  constructor() {}
 
-  ID: string = "com.tutorial.initiative-tracker";
+  createMenu() {
+    const metadata = this.metadata;
 
-  constructor() { }
-
-  setupContextMenu(){
     OBR.contextMenu.create({
-      id: `${this.ID}/context-menu`,
+      id: this.contextMenu,
       icons: [
         {
-          icon: "/add.svg",
-          label: "Adicionar Player",
+          icon: '/add.svg',
+          label: 'Adicionar ao Combate',
           filter: {
-            every: [{ key: "layer", value: "CHARACTER" },{ key: ["metadata", `${this.ID}/metadata`], value: undefined }],
-
-          }
+            every: [
+              { key: 'layer', value: 'CHARACTER' },
+              { key: ['metadata', metadata], value: undefined },
+            ],
+          },
         },
         {
-          icon: "/remove.svg",
-          label: "Remover Jogador",
+          icon: '/remove.svg',
+          label: 'Remover do Combate',
           filter: {
-            every: [{ key: "layer", value: "CHARACTER" }],
+            every: [{ key: 'layer', value: 'CHARACTER' }],
           },
         },
       ],
-      onClick: (context) => {  // Use arrow function to preserve the 'this' context
-        const addToInitiative = context.items.every((item)=> item.metadata[`${this.ID}/metadata`] === undefined);
-        if (addToInitiative){
-          const initiative = 20;
-          const life = 100;
-          const mana = 50;
-          const stamina = 30;
-
-
-          OBR.scene.items.updateItems(context.items, (items) => {
-          for (let item of items){
-            item.metadata[`${this.ID}/metadata`] = {
-              initiative,life,mana,stamina
-            }
-          }
-        });
-        }else{
+      async onClick(context) {
+        const addToInitiative = context.items.every(
+          (item) => item.metadata[metadata] === undefined
+        );
+        if (addToInitiative) {
           OBR.scene.items.updateItems(context.items, (items) => {
             for (let item of items) {
-              delete item.metadata[`${this.ID}/metadata`]
+              OBR.scene.items.getItems([item.id]).then((image) => image[0]);
+              const player = new PlayerModel(item.id, item.name, 50, 50, 50);
+              item.metadata[metadata] = {
+                player,
+              };
+            }
+          });
+        } else {
+          OBR.scene.items.updateItems(context.items, (items) => {
+            for (let item of items) {
+              delete item.metadata[metadata];
             }
           });
         }

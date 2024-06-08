@@ -1,0 +1,44 @@
+<div *ngFor="let player of players" id="player-{{ player.id }}">
+  <p>{{ player.name }} : {{ player.type }}</p>
+  <div class="data-player">
+    <img class="icon-status" width="15px" src="/hearth.svg" alt="" />
+    <p class="value-points">{{ player.life }}</p>
+    <input #lifeInput class="input-value-points" type="text" />
+    <img class="icon-status" width="15px" src="/potion.png" alt="" />
+    <p class="value-points">{{ player.mana }}</p>
+    <input #manaInput class="input-value-points" type="text" />
+    <img class="icon-status" width="20px" src="/stamina.png" alt="" />
+    <p class="value-points">{{ player.stamina }}</p>
+    <input #staminaInput class="input-value-points" type="text" />
+    <img class="icon-status" width="20px" src="/upMana.svg" alt="" />
+    <p class="value-points">{{ player.regenMana }}</p>
+    <input #regenManaInput class="input-value-points" type="text" />
+    <img class="icon-status" width="20px" src="/upStamina.svg" alt="" />
+    <p class="value-points">{{ player.regenStamina }}</p>
+    <input #regenStaminaInput class="input-value-points" type="text" />
+  </div>
+
+  <span id="button-confirm">
+    <select #typeSelect name="type" id="type">
+      <option value="player">Player</option>
+      <option value="monster">Monster</option>
+    </select>
+    <button
+      class="confirm-player"
+      (click)="
+        updatePlayer(
+          player.id,
+          lifeInput.value,
+          manaInput.value,
+          staminaInput.value,
+          regenManaInput.value,
+          regenStaminaInput.value,
+          typeSelect.value,
+          player
+        )
+      "
+    >
+      OK
+    </button>
+  </span>
+</div>

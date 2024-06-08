@@ -1,12 +1,12 @@
 {
-    "name": "Angular!",
-    "version": "1.0.0",
-    "manifest_version": 1,
-    "action": {
-      "title": "Angular!",
-      "icon": "/public/dice.svg",
-      "popover": "/",
-      "height": 600,
-      "width": 400
-    }
+  "name": "Simple Combat!",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "action": {
+    "title": "Simple Combat!",
+    "icon": "/dice.svg",
+    "popover": "/",
+    "height": 600,
+    "width": 400
+  }
 }
