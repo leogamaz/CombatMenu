@@ -1,4 +1,5 @@
 export class PlayerModel {
+  public id: string;
   public name: string;
   public life: number;
   public mana: number;
@@ -9,8 +10,9 @@ export class PlayerModel {
   public statusLifePercent: number;
   public statusManaPercent: number;
   public statusStaminaPercent: number;
-  public id: string;
-  public type: string = 'player';
+  public regenStamina: number;
+  public regenMana: number;
+  public type!: string;
 
   constructor(
     id: string,
@@ -30,6 +32,8 @@ export class PlayerModel {
     this.statusLifePercent = (this.statusMana / this.life) * 100;
     this.statusManaPercent = (this.statusMana / this.mana) * 100;
     this.statusStaminaPercent = (this.statusStamina / this.stamina) * 100;
+    this.regenStamina = 0;
+    this.regenMana = 0;
   }
 
   updateLife(life: number | string) {
@@ -85,7 +89,7 @@ export class PlayerModel {
     this.type = 'player';
   }
 
-  private recalPercents(): void {
+  public recalPercents(): void {
     // Recalcula as porcentagens de status do personagem.
     this.statusLifePercent = (this.statusLife / this.life) * 100;
     this.statusManaPercent = (this.statusMana / this.mana) * 100;
@@ -123,6 +127,9 @@ export class PlayerModel {
     player.statusLifePercent = data.statusLifePercent;
     player.statusManaPercent = data.statusManaPercent;
     player.statusStaminaPercent = data.statusStaminaPercent;
+    player.regenMana = data.regenMana;
+    player.regenStamina = data.regenStamina;
+    player.type = data.type;
     return player;
   }
 }

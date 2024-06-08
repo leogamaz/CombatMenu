@@ -217,3 +217,20 @@
 .player:hover {
   animation: color-change-2x 1s linear infinite alternate both;
 }
+
+.turn-controller {
+  display: flex;
+  justify-content: space-between;
+}
+
+#buttons-turn {
+  margin-top: 8px;
+  background-color: transparent;
+  border: 1px solid rgb(115, 246, 71);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  &&:hover {
+    background-color: #83838366;
+  }
+}

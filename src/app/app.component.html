@@ -1,11 +1,29 @@
 <div class="menu-bar">
   <ul class="menu-list">
     <li class="menu-item">
-      <img id="dice-icon" src="/dice.svg" width="20px" alt="" />
+      <img
+        (click)="toogleViewCombat()"
+        id="dice-icon"
+        src="/dice.svg"
+        width="20px"
+        alt=""
+      />
     </li>
     <li class="menu-item">
-      <img id="person-icon" src="/person.svg" width="20px" alt="" />
+      <img
+        (click)="toogleViewCombat()"
+        id="person-icon"
+        src="/person.svg"
+        width="20px"
+        alt=""
+      />
     </li>
   </ul>
 </div>
-<app-combat-menu-player></app-combat-menu-player>
+<app-combat-menu-player
+  [ngStyle]="{ display: viewCombat ? 'none' : 'block' }"
+></app-combat-menu-player>
+<app-ficha
+  *ngIf="playerRole == 'GM'"
+  [ngStyle]="{ display: viewFicha ? 'none' : 'block' }"
+></app-ficha>

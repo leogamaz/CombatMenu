@@ -1,34 +1,91 @@
+<div class="turn-controller">
+  <button
+    (click)="previousRound()"
+    id="buttons-turn"
+    *ngIf="playerRole == 'GM'"
+  >
+    << Turn
+  </button>
+  <button (click)="nextRound()" id="buttons-turn" *ngIf="playerRole == 'GM'">
+    Turn >>
+  </button>
+</div>
 <div *ngFor="let player of players" id="player-{{ player.id }}">
   <span class="player-data">
     <p class="player-label">{{ player.name }}</p>
     <p class="player-label">Life:</p>
     <div class="player-health-bar player-status-bar">
+      <!-- Mostrar barra normal para GM ou se player.type não for 'monster' -->
       <div
+        *ngIf="playerRole === 'GM' || player.type !== 'monster'"
         [ngStyle]="{ width: player.statusLifePercent + '%' }"
         class="player-health-fill"
         id="health-fill"
       >
         {{ player.statusLifePercent }}%
       </div>
+
+      <!-- Mostrar barra com ??? e fundo preto para jogadores e se player.type for 'monster' -->
+      <div
+        *ngIf="playerRole === 'player' && player.type === 'monster'"
+        [ngStyle]="{
+          width: player.statusLifePercent + '%',
+          backgroundColor: 'black'
+        }"
+        class="player-health-fill"
+        id="health-fill"
+      >
+        ???
+      </div>
     </div>
     <p class="player-label">Mana:</p>
     <div class="player-mana-bar player-status-bar">
+      <!-- Mostrar barra normal para GM ou se player.type não for 'monster' -->
       <div
+        *ngIf="playerRole === 'GM' || player.type !== 'monster'"
         [ngStyle]="{ width: player.statusManaPercent + '%' }"
         class="player-mana-fill"
         id="mana-fill"
       >
         {{ player.statusManaPercent }}%
       </div>
+
+      <!-- Mostrar barra com ??? e fundo preto para jogadores e se player.type for 'monster' -->
+      <div
+        *ngIf="playerRole === 'player' && player.type === 'monster'"
+        [ngStyle]="{
+          width: player.statusManaPercent + '%',
+          backgroundColor: 'black'
+        }"
+        class="player-mana-fill"
+        id="mana-fill"
+      >
+        ???
+      </div>
     </div>
     <p class="player-label">Stamina:</p>
     <div class="player-stamina-bar player-status-bar">
+      <!-- Mostrar barra normal para GM ou se player.type não for 'monster' -->
       <div
+        *ngIf="playerRole === 'GM' || player.type !== 'monster'"
         [ngStyle]="{ width: player.statusStaminaPercent + '%' }"
         class="player-stamina-fill"
         id="stamina-fill"
       >
         {{ player.statusStaminaPercent }}%
+      </div>
+
+      <!-- Mostrar barra com ??? e fundo preto para jogadores e se player.type for 'monster' -->
+      <div
+        *ngIf="playerRole === 'player' && player.type === 'monster'"
+        [ngStyle]="{
+          width: player.statusStaminaPercent + '%',
+          backgroundColor: 'black'
+        }"
+        class="player-stamina-fill"
+        id="stamina-fill"
+      >
+        ???
       </div>
     </div>
     <span *ngIf="playerRole == 'GM'" class="order-player">
@@ -55,17 +112,34 @@
   <span class="player-data-points">
     <div id="player-data-points-life">
       <p>Life:</p>
-      <p>{{ player.life }} : {{ player.statusLife }}</p>
+      <p>
+        {{
+          player.type == "monster" && playerRole != "GM" ? "???" : player.life
+        }}
+        : {{ player.statusLife - player.life }}
+      </p>
     </div>
 
     <div id="player-data-points-mana">
-      <p>Life:</p>
-      <p>{{ player.mana }} : {{ player.statusMana }}</p>
+      <p>Mana:</p>
+      <p>
+        {{
+          player.type == "monster" && playerRole != "GM" ? "???" : player.mana
+        }}
+        : {{ player.statusMana - player.mana }}
+      </p>
     </div>
 
     <div id="player-data-points-stamina">
       <p>Stamina:</p>
-      <p>{{ player.stamina }} : {{ player.statusStamina }}</p>
+      <p>
+        {{
+          player.type == "monster" && playerRole != "GM"
+            ? "???"
+            : player.stamina
+        }}
+        : {{ player.statusStamina - player.stamina }}
+      </p>
     </div>
   </span>
   <span *ngIf="playerRole == 'GM'" class="player-action">

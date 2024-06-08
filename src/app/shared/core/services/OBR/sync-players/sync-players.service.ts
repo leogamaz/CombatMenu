@@ -44,8 +44,18 @@ export class SyncPlayersService {
     });
   }
 
+  pushPlayer(player: PlayerModel) {
+    OBR.scene.items.updateItems([player.id], (itemsPlayer) => {
+      itemsPlayer.forEach((item) => {
+        item.metadata[this.metadata] = { player };
+      });
+    });
+  }
+
   getPlayers() {
-    OBR.scene.items.getItems(['b8d62fff-43e9-4ca1-8766-f69767a9baf8']);
+    OBR.scene.items
+      .getItems(['b8d62fff-43e9-4ca1-8766-f69767a9baf8'])
+      .then((result) => console.log());
   }
 
   pushOrderPlayers(order: Array<string>) {

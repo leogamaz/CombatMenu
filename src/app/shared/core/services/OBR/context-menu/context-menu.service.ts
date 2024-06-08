@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import OBR from '@owlbear-rodeo/sdk';
+import OBR, { isImage, Image, Item } from '@owlbear-rodeo/sdk';
 import { PlayerModel } from '../../../models/playerModel';
 
 @Injectable({
@@ -15,49 +15,49 @@ export class ContextMenuService {
   createMenu() {
     const metadata = this.metadata;
 
-      OBR.contextMenu.create({
-        id: this.contextMenu,
-        icons: [
-          {
-            icon: '/add.svg',
-            label: 'Adicionar ao Combate',
-            filter: {
-              every: [
-                { key: 'layer', value: 'CHARACTER' },
-                { key: ['metadata', metadata], value: undefined },
-              ],
-            },
+    OBR.contextMenu.create({
+      id: this.contextMenu,
+      icons: [
+        {
+          icon: '/add.svg',
+          label: 'Adicionar ao Combate',
+          filter: {
+            every: [
+              { key: 'layer', value: 'CHARACTER' },
+              { key: ['metadata', metadata], value: undefined },
+            ],
           },
-          {
-            icon: '/remove.svg',
-            label: 'Remover do Combate',
-            filter: {
-              every: [{ key: 'layer', value: 'CHARACTER' }],
-            },
-          },
-        ],
-        onClick(context) {
-          const addToInitiative = context.items.every(
-            (item) => item.metadata[metadata] === undefined
-          );
-          if (addToInitiative) {
-
-            OBR.scene.items.updateItems(context.items, (items) => {
-              for (let item of items) {
-                const player = new PlayerModel(item.id,item.name,50,50,50)
-                item.metadata[metadata] = {
-                  player
-                };
-              }
-            });
-          } else {
-            OBR.scene.items.updateItems(context.items, (items) => {
-              for (let item of items) {
-                delete item.metadata[metadata];
-              }
-            });
-          }
         },
-      });
+        {
+          icon: '/remove.svg',
+          label: 'Remover do Combate',
+          filter: {
+            every: [{ key: 'layer', value: 'CHARACTER' }],
+          },
+        },
+      ],
+      async onClick(context) {
+        const addToInitiative = context.items.every(
+          (item) => item.metadata[metadata] === undefined
+        );
+        if (addToInitiative) {
+          OBR.scene.items.updateItems(context.items, (items) => {
+            for (let item of items) {
+              OBR.scene.items.getItems([item.id]).then((image) => image[0]);
+              const player = new PlayerModel(item.id, item.name, 50, 50, 50);
+              item.metadata[metadata] = {
+                player,
+              };
+            }
+          });
+        } else {
+          OBR.scene.items.updateItems(context.items, (items) => {
+            for (let item of items) {
+              delete item.metadata[metadata];
+            }
+          });
+        }
+      },
+    });
   }
 }

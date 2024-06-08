@@ -52,15 +52,27 @@ export class CombatMenuPlayerComponent implements OnInit {
     this.syncPlayersService.pushPlayers(this.players);
     this.damageAmount = '';
   }
-  updatePlayerMana(player: PlayerModel, mana: number | string): void {
+  updatePlayerMana(
+    player: PlayerModel,
+    mana: number | string,
+    sync: boolean = true
+  ): void {
     player.updateMana(mana);
-    this.syncPlayersService.pushPlayers(this.players);
     this.manaAmount = '';
+    if (sync) {
+      this.syncPlayersService.pushPlayers(this.players);
+    }
   }
-  updatePlayerStamina(player: PlayerModel, stamina: number | string): void {
+  updatePlayerStamina(
+    player: PlayerModel,
+    stamina: number | string,
+    sync: boolean = true
+  ): void {
     player.updateStamina(stamina);
-    this.syncPlayersService.pushPlayers(this.players);
     this.staminaAmount = '';
+    if (sync) {
+      this.syncPlayersService.pushPlayers(this.players);
+    }
   }
 
   removeFromCombat(player: PlayerModel) {
@@ -93,6 +105,43 @@ export class CombatMenuPlayerComponent implements OnInit {
 
     this.players[indexPlayer] = this.players[indexPlayer - 1];
     this.players[indexPlayer - 1] = player;
+    this.orderPlayers = this.players.map((player: PlayerModel) => player.id);
+    this.syncPlayersService.pushOrderPlayers(this.orderPlayers);
+    this.cdr.detectChanges();
+  }
+
+  nextRound() {
+    console.log(this.players);
+    this.players.forEach((player) => {
+      this.updatePlayerStamina(player, player.regenStamina, false);
+      this.updatePlayerMana(player, player.regenMana, false);
+    });
+    this.moveFirstToLast();
+    this.syncPlayersService.pushPlayers(this.players);
+  }
+  previousRound() {
+    this.players.forEach((player) => {
+      this.updatePlayerStamina(player, player.regenStamina * 1, false);
+      this.updatePlayerMana(player, player.regenMana * 1, false);
+    });
+    this.reversePlayers();
+    this.syncPlayersService.pushPlayers(this.players);
+  }
+
+  moveFirstToLast() {
+    if (this.players.length > 1) {
+      const firstPlayer = this.players.shift();
+      if (firstPlayer) {
+        this.players.push(firstPlayer);
+      }
+      this.orderPlayers = this.players.map((player: PlayerModel) => player.id);
+      this.syncPlayersService.pushOrderPlayers(this.orderPlayers);
+      this.cdr.detectChanges();
+    }
+  }
+
+  reversePlayers() {
+    this.players.reverse();
     this.orderPlayers = this.players.map((player: PlayerModel) => player.id);
     this.syncPlayersService.pushOrderPlayers(this.orderPlayers);
     this.cdr.detectChanges();
